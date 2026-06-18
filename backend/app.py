@@ -24,11 +24,15 @@ app = FastAPI(title="PPT Easy Backend v5")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["Content-Disposition"],
 )
+
+@app.get("/")
+def root():
+    return {"ok": True, "service": "ppt-easy-backend-v5", "message": "Open /health or POST /api/convert"}
 
 @app.get("/health")
 def health():

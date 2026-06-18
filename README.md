@@ -53,3 +53,11 @@ https://ppt-easy-backend.onrender.com
 ## Important
 
 Browser-only OCR exact table nahi bana sakta. v5 backend OpenCV + Tesseract based table detection use karta hai, isliye Excel output v4 se zyada usable hoga.
+
+
+## v5.1 Fix
+
+- Save Backend URL button now shows visible checking status.
+- Health check waits up to 70 seconds for Render free cold start.
+- Backend CORS credentials disabled for safer GitHub Pages calls.
+- Root `/` endpoint added for quick browser test.
