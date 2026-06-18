@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRDM PPT Image to Editable Excel/PPT Converter</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Browser-only libraries. Works on GitHub Pages. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="badge">SRDM ZP SATNA • Browser Tool</p>
+      <h1>PPT Image → Editable Excel/PPT Converter</h1>
+      <p class="subtitle">Image-only PPTX को OCR करके editable Excel या editable written PPT में convert करें.</p>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="panel upload-panel">
+      <div class="panel-head">
+        <h2>Upload & Convert</h2>
+        <p>File आपके browser में process होती है. Server/backend की जरूरत नहीं.</p>
+      </div>
+
+      <label class="upload-box" for="pptFile">
+        <input type="file" id="pptFile" accept=".pptx" />
+        <span class="upload-icon">📊</span>
+        <strong id="fileName">PPTX file choose करें</strong>
+        <small>Image-only slides वाले PPTX के लिए best</small>
+      </label>
+
+      <div class="grid two">
+        <label>
+          Output Type
+          <select id="outputType">
+            <option value="both">Editable Excel + Editable PPT</option>
+            <option value="excel">Only Editable Excel</option>
+            <option value="ppt">Only Editable PPT</option>
+          </select>
+        </label>
+
+        <label>
+          OCR Language
+          <select id="ocrLang">
+            <option value="eng+hin">English + Hindi</option>
+            <option value="eng">English only</option>
+            <option value="hin">Hindi only</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid two">
+        <label>
+          Parsing Mode
+          <select id="parseMode">
+            <option value="table">Auto table rows</option>
+            <option value="lines">Line-wise text</option>
+            <option value="plain">Plain text block</option>
+          </select>
+        </label>
+
+        <label>
+          PPT Rebuild Style
+          <select id="pptStyle">
+            <option value="table">Editable table</option>
+            <option value="text">Editable text boxes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="checks">
+        <label><input type="checkbox" id="keepImages" checked /> PPT output में original image reference slide notes के रूप में न रखें</label>
+        <label><input type="checkbox" id="blueTheme" checked /> Blue professional theme</label>
+      </div>
+
+      <button id="convertBtn" class="primary">Convert Now</button>
+      <button id="resetBtn" class="ghost" type="button">Reset</button>
+
+      <div id="progressWrap" class="progress-wrap hidden">
+        <div class="progress-bar"><span id="progressBar"></span></div>
+        <p id="status">Ready</p>
+      </div>
+
+      <div id="downloads" class="downloads"></div>
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="panel-head">
+        <h2>Preview</h2>
+        <p>OCR result यहाँ दिखेगा. Download से पहले basic check कर सकते हैं.</p>
+      </div>
+      <div id="preview" class="preview-empty">
+        PPT upload करके Convert Now दबाएँ.
+      </div>
+    </section>
+  </main>
+
+  <section class="notes">
+    <h3>Important</h3>
+    <p>यह static GitHub Pages version है. Accuracy image quality और OCR पर depend करेगी. Blurry Hindi table में manual correction की जरूरत पड़ सकती है.</p>
+  </section>
+
+  <footer>
+    Developed for SRDM workflow • Runs fully in browser • No backend required
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

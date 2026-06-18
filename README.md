@@ -1,0 +1,50 @@
+# SRDM PPT Image to Editable Excel/PPT Converter
+
+A static browser-based tool that converts image-only PPTX slides into editable Excel and editable PowerPoint output using OCR.
+
+## Features
+
+- Upload `.pptx` files directly in the browser
+- Extract slide images from image-only PPTX files
+- OCR using Tesseract.js
+- Supports English + Hindi OCR option
+- Export editable Excel workbook (`.xlsx`)
+- Export editable written PowerPoint (`.pptx`)
+- Preview extracted OCR text slide-wise
+- No backend required
+- Ready for GitHub Pages deployment
+
+## Best Use Case
+
+This tool is designed for PPT files where each slide is mostly or fully an image, such as scanned/converted reports, engineer-wise cards, meeting slides, and table screenshots.
+
+## Limitations
+
+- OCR accuracy depends on image quality.
+- Very blurry, low-resolution, rotated, or compressed Hindi text may need manual correction.
+- GitHub Pages is static hosting, so this version uses browser OCR instead of Python/PaddleOCR.
+- Large PPTX files can be slow because OCR runs in the user's browser.
+- Complex merged-cell tables may not rebuild perfectly in the first version.
+
+## Deploy on GitHub Pages
+
+1. Create a new GitHub repository.
+2. Upload these files to the repository root:
+   - `index.html`
+   - `style.css`
+   - `app.js`
+   - `README.md`
+3. Go to **Repository Settings → Pages**.
+4. Select **Deploy from branch**.
+5. Select branch: `main`.
+6. Select folder: `/root`.
+7. Save.
+8. Open the GitHub Pages link after deployment.
+
+## Local Test
+
+You can also test locally by opening `index.html` in a browser. For best results, use Chrome or Edge.
+
+## Privacy
+
+The uploaded PPTX is processed in the browser. This static version does not upload files to any custom backend server.
