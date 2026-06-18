@@ -68,14 +68,15 @@
         <label>
           PPT Rebuild Style
           <select id="pptStyle">
-            <option value="table">Editable table</option>
-            <option value="text">Editable text boxes</option>
+            <option value="layout">Same-layout editable text boxes (Recommended)</option>
+            <option value="table">Editable table (Experimental)</option>
+            <option value="text">Single editable text box</option>
           </select>
         </label>
       </div>
 
       <div class="checks">
-        <label><input type="checkbox" id="keepImages" checked /> PPT output में original image reference slide notes के रूप में न रखें</label>
+        <label><input type="checkbox" id="addReferenceImage" /> PPT output में original image faint reference के रूप में रखें</label>
         <label><input type="checkbox" id="blueTheme" checked /> Blue professional theme</label>
       </div>
 
