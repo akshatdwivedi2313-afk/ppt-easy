@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ppt-easy-backend
+    env: docker
+    plan: free
+    rootDir: backend
+    healthCheckPath: /health

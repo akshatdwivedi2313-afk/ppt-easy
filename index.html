@@ -1,121 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SRDM PPT Image to Editable Excel/PPT</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PPT Easy Real Converter v5</title>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Local vendor libraries: no PptxGen CDN dependency -->
-  <script src="libs/jszip.min.js"></script>
-  <script src="libs/xlsx.full.min.js"></script>
-  <script src="libs/pptxgen.min.js"></script>
-  <script src="libs/tesseract.min.js"></script>
 </head>
 <body>
-  <header class="hero">
-    <div class="brandline">SRDM ZP SATNA • GitHub Pages Ready • Browser Tool</div>
-    <h1>PPT Image → Editable Excel / Editable PPT</h1>
-    <p>Image-only PPTX को OCR करके editable Excel और written/editable PPT में बदलने वाला tool.</p>
-  </header>
-
-  <main class="layout">
-    <section class="card controls">
-      <h2>1) Upload PPTX</h2>
-      <label class="drop" for="pptFile">
-        <input type="file" id="pptFile" accept=".pptx" />
-        <span class="icon">📊</span>
-        <strong id="fileName">PPTX choose karo</strong>
-        <small>Image-only slides वाली PPT best रहेगी</small>
-      </label>
-
-      <div class="grid2">
-        <label>OCR Language
-          <select id="ocrLang">
-            <option value="eng+hin">English + Hindi</option>
-            <option value="eng">English only</option>
-            <option value="hin">Hindi only</option>
-          </select>
-        </label>
-        <label>Excel Build Mode
-          <select id="excelMode">
-            <option value="visual">Visual Grid OCR (recommended)</option>
-            <option value="lines">Line-wise text</option>
-            <option value="auto">Auto table from gaps</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="grid2">
-        <label>PPT Build Mode
-          <select id="pptMode">
-            <option value="layout">Same-layout editable text boxes</option>
-            <option value="table">Editable table from Excel rows</option>
-            <option value="onebox">One editable text block</option>
-          </select>
-        </label>
-        <label>Visual Grid Columns
-          <select id="gridCols">
-            <option value="24">24 columns</option>
-            <option value="28" selected>28 columns</option>
-            <option value="32">32 columns</option>
-            <option value="36">36 columns</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="checks">
-        <label><input type="checkbox" id="includeImage" /> PPT में original slide image background भी रखें</label>
-        <label><input type="checkbox" id="blueTheme" checked /> Blue professional theme</label>
-        <label><input type="checkbox" id="autoDownload" checked /> OCR complete होते ही selected output download करें</label>
-      </div>
-
-      <div class="grid2">
-        <label>Output
-          <select id="outputType">
-            <option value="both">Excel + PPT</option>
-            <option value="excel">Only Excel</option>
-            <option value="ppt">Only PPT</option>
-          </select>
-        </label>
-        <label>Image scan limit
-          <select id="imagePolicy">
-            <option value="slide-main">Main image per slide</option>
-            <option value="all-media">All PPT media images</option>
-          </select>
-        </label>
-      </div>
-
-      <button id="convertBtn" class="primary">Convert / OCR Now</button>
-      <button id="testPptBtn" class="secondary" type="button">Test PPT Export</button>
-      <button id="resetBtn" class="ghost" type="button">Reset</button>
-
-      <div id="progressWrap" class="progress-wrap hidden">
-        <div class="bar"><span id="progressBar"></span></div>
-        <p id="status">Ready</p>
-      </div>
-
-      <div id="downloadPanel" class="download-panel hidden">
-        <h3>2) Download Output</h3>
-        <button id="downloadExcelBtn" class="download" type="button">Download Editable Excel</button>
-        <button id="downloadPptBtn" class="download" type="button">Download Editable PPT</button>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="badge">v5 • Backend OCR/Table Recognition</p>
+        <h1>PPT Image → Editable Excel / PPT</h1>
+        <p class="sub">Image-only PPT ko backend OCR + table detection se editable Excel/PPT me convert karein.</p>
       </div>
     </section>
 
-    <section class="card preview">
-      <h2>Preview & Correction</h2>
-      <p class="muted">OCR ke baad har slide ka TSV दिखेगा. Export se pehle yahin edit kar sakte ho.</p>
-      <div id="previewBox" class="empty">PPT upload karke Convert / OCR Now दबाओ.</div>
+    <section class="grid">
+      <div class="card">
+        <h2>1) Backend URL</h2>
+        <p class="hint">Local: <code>http://localhost:8000</code>. Online deploy ke baad Render/Railway URL yahan paste karo.</p>
+        <input id="backendUrl" type="url" placeholder="https://your-backend.onrender.com" />
+        <button id="saveBackend" class="secondary">Save Backend URL</button>
+        <div id="health" class="status small">Backend check pending.</div>
+      </div>
+
+      <div class="card">
+        <h2>2) Upload PPTX</h2>
+        <label class="upload">
+          <input id="pptFile" type="file" accept=".pptx" />
+          <span id="fileName">PPTX choose karo</span>
+        </label>
+
+        <div class="form2">
+          <label>Output
+            <select id="outputType">
+              <option value="excel">Only Excel</option>
+              <option value="ppt">Only Editable PPT</option>
+              <option value="both">Excel + PPT ZIP</option>
+            </select>
+          </label>
+
+          <label>OCR Language
+            <select id="ocrLang">
+              <option value="eng+hin">English + Hindi</option>
+              <option value="eng">English only</option>
+              <option value="hin">Hindi only</option>
+            </select>
+          </label>
+
+          <label>Excel Mode
+            <select id="excelMode">
+              <option value="table">Real table detection</option>
+              <option value="layout">Layout grid fallback</option>
+            </select>
+          </label>
+
+          <label>PPT Mode
+            <select id="pptMode">
+              <option value="editable_text">Same-layout editable text</option>
+              <option value="editable_table">Editable table slide</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="check"><input type="checkbox" id="includeImage" /> PPT me original image background bhi rakho</label>
+        <button id="convertBtn">Convert Now</button>
+        <div class="bar"><span id="bar"></span></div>
+        <div id="status" class="status">Ready.</div>
+      </div>
+    </section>
+
+    <section class="card notes">
+      <h2>Important</h2>
+      <p>GitHub Pages sirf frontend host karega. Accurate OCR/table conversion ke liye backend deploy karna zaroori hai. Browser-only OCR se exact Excel table nahi banega.</p>
     </section>
   </main>
-
-  <section class="notice">
-    <h3>Important limitation</h3>
-    <p>Static GitHub Pages version browser OCR par चलता है. Blurry/छोटे Hindi table में 100% perfect cell extraction possible नहीं होता. Is version में PPT export valid PptxGenJS se बनता है और Excel को visual grid alignment में रखा गया है ताकि screenshot जैसे खराब single-column output na aaye.</p>
-  </section>
-
-  <footer>Developed for SRDM workflow • Runs in browser • No backend upload</footer>
-
   <script src="app.js"></script>
 </body>
 </html>

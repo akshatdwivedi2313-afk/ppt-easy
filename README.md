@@ -1,46 +1,55 @@
-# SRDM PPT Image to Editable Excel/PPT Converter v4
+# PPT Easy Real Converter v5
 
-Ye GitHub Pages-compatible browser tool hai. User image-only PPTX upload karta hai, tool slide images extract karta hai, browser OCR chalata hai, aur editable Excel / editable PPT generate karta hai.
+Ye version **accurate conversion** ke liye hai. GitHub Pages sirf frontend host karta hai, isliye image-only PPT ko actual editable Excel/PPT me convert karne ke liye backend zaroori hai.
 
-## v4 me kya fix hai
-
-- `pptxgen is not defined` fixed: PptxGenJS local `libs/pptxgen.min.js` se load hota hai, CDN dependency nahi.
-- Manual OOXML PPT writer hata diya gaya: PPT export ab official PptxGenJS se banta hai, isliye PowerPoint file corrupt nahi honi chahiye.
-- Excel single-column mess ko reduce karne ke liye Visual Grid OCR default hai.
-- Har slide ka OCR TSV preview/edit box diya hai. Export se pehle cells manually correct kiye ja sakte hain.
-- Test PPT Export button added: deployment ke baad pehle isse verify kar sakte ho.
-
-## GitHub Pages deployment
-
-1. Is ZIP ko extract karo.
-2. Saari files repo ke root me upload/commit karo.
-3. GitHub → Repository → Settings → Pages.
-4. Source: Deploy from branch.
-5. Branch: `main`, Folder: `/root`.
-6. Save.
-7. Site open karke hard refresh karo: `Ctrl + F5`.
-
-## Folder structure
+## Repo Structure
 
 ```text
 index.html
 style.css
 app.js
-libs/
-  jszip.min.js
-  xlsx.full.min.js
-  pptxgen.min.js
-  tesseract.min.js
-  worker.min.js
-  tesseract-core-simd-lstm.wasm.js
+backend/
+  app.py
+  requirements.txt
+  Dockerfile
+  render.yaml
 ```
 
-## Important limitation
+## Local Run
 
-GitHub Pages static site hai, isliye OCR browser me hota hai. Low-resolution / blurry / small Hindi table me 100% perfect rows-columns automatic nahi milenge. Best practical output ke liye:
+```bash
+cd backend
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+pip install -r requirements.txt
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
 
-- Excel Build Mode: `Visual Grid OCR`
-- PPT Build Mode: `Same-layout editable text boxes`
-- OCR Language: `English + Hindi`
+System me Tesseract install hona chahiye:
 
-Agar production-level perfect table conversion chahiye, toh frontend ke saath backend OCR/AI API add karna padega.
+- Windows: Tesseract OCR install karo aur PATH me add karo.
+- Hindi OCR ke liye Hindi traineddata install ho.
+
+Frontend ke liye root `index.html` open karo aur Backend URL me `http://localhost:8000` rakho.
+
+## Online Deploy
+
+### 1) Backend Render par deploy
+
+Render par New Web Service banao, same GitHub repo connect karo, root directory `backend` set karo.
+
+Docker deploy best hai. Render Dockerfile use karega.
+
+### 2) GitHub Pages frontend
+
+Settings → Pages → Deploy from branch → `main` → `/root`.
+
+Site open hone ke baad backend URL me Render URL paste karo, jaise:
+
+```text
+https://ppt-easy-backend.onrender.com
+```
+
+## Important
+
+Browser-only OCR exact table nahi bana sakta. v5 backend OpenCV + Tesseract based table detection use karta hai, isliye Excel output v4 se zyada usable hoga.
